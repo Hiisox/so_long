@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   checker_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,36 +10,60 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minilibx/mlx.h"
+#include "so_long.h"
 
-typedef struct	s_image
+int	check_wall(char *str)
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_image;
+	int	i;
 
-void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	i = 0;
+	while (str[i] != '\n')
+	{
+		if (str[i] != '1')
+			return (1);
+		i++;
+	}
+	return (i);
 }
 
-int	main(void)
+int	check_c(char *str)
 {
-	void	*mlx;
-	void	*new_win;
-	t_image	img;
+	int	i;
 
-	mlx = mlx_init();
-	new_win = mlx_new_window(mlx, 800, 800, "ZEEEEEEBIIII");
-	img.img = mlx_new_image(mlx, 800, 800);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	my_mlx_pixel_put(&img, 400, 400, 0xFFFFFFFF);
-	mlx_put_image_to_window(mlx, new_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	i = 0;
+	while (str[i] != '\n')
+	{
+		if (str[i] == 'c')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	check_e(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\n')
+	{
+		if (str[i] == 'e')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	check_p(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\n')
+	{
+		if (str[i] == 'p')
+			return (1);
+		i++;
+	}
+	return (0);
 }
