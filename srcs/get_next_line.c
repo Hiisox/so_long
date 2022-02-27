@@ -5,87 +5,110 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/11 15:02:11 by mmhaya            #+#    #+#             */
-/*   Updated: 2021/12/14 14:26:17 by mmhaya           ###   ########.fr       */
+/*   Created: 2021/12/06 15:45:54 by mmhaya            #+#    #+#             */
+/*   Updated: 2022/02/15 18:14:39 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	*get_next_line(int fd)
+char	*ft_get_static(char *str, char buf[80], int len)
 {
-	char		*buff;
-	char		*str;
-	static char	*save = NULL;
-	int			read_value;
+	char	*tmp;
 
-	read_value = 1;
-	if (fd < 0)
-		return (NULL);
-	buff = (char *)malloc(81);
-	if (!buff)
-		return (NULL);
-	while (read_value > 0 && !ft_strchr(save))
+	buf[len] = '\0';
+	if (!str)
 	{
-		read_value = read(fd, buff, 80);
-		if (read_value == -1)
-			return (free(buff), NULL);
-		buff[read_value] = '\0';
-		save = ft_strjoin(save, buff);
+		str = ft_strdup(buf);
+		if (!str)
+			return (NULL);
 	}
-	free(buff);
-	str = only_str(save);
-	save = only_areturn(save);
+	else if (str)
+	{
+		tmp = str;
+		str = ft_strjoin(str, buf);
+		if (!str)
+			return (NULL);
+		free(tmp);
+	}
 	return (str);
 }
 
-char	*only_str(char *str)
+char	*ft_stock_line(char *str, char **line)
 {
-	char	*str2;
-	int		i;
+	size_t	i;
+	size_t	len;
+	char	*tmp;
 
 	i = 0;
-	if (!str)
-		return (0);
-	if (!(*str))
-		return (free(str), NULL);
-	while (str[i] && str[i] != '\n')
+	len = ft_strlen(str);
+	while (str[i] != '\n' && str[i])
 		i++;
-	if (str[i] == '\n')
-		i++;
-	str2 = (char *)malloc(i + 1);
-	if (!str2)
-		return (0);
-	i = -1;
-	while (str[++i] && str[i] != '\n')
-		str2[i] = str[i];
-	str2[i] = str[i];
-	if (str[i] == '\n')
-		str2[++i] = '\0';
-	return (str2);
+	if (i < len)
+	{
+		*line = ft_substr(str, 0, i);
+		if (!(*line))
+			return (NULL);
+		tmp = str;
+		str = ft_substr(str, i + 1, len);
+		if (!str)
+			return (NULL);
+		free(tmp);
+	}
+	else
+	{
+		*line = str;
+		str = NULL;
+	}
+	return (str);
 }
 
-char	*only_areturn(char *str)
+int	get_next_line(int fd, char **line)
 {
-	char	*str2;
-	int		i;
-	int		j;
+	int				len;
+	char			buf[80 + 1];
+	static char		*str;
 
-	i = 0;
-	j = 0;
-	if (!str || !str[0])
+	if (fd < 0 || !line || read(fd, buf, 0) < 0)
+		return (-1);
+	len = read(fd, buf, 80);
+	while (len > 0)
+	{
+		str = ft_get_static(str, buf, len);
+		if (ft_strchr(str, '\n'))
+			break ;
+		len = read(fd, buf, 80);
+	}
+	if (!str)
+	{
+		*line = ft_strdup("");
 		return (0);
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (!str[i])
-		return (free(str), NULL);
-	str2 = malloc(ft_strlen(&str[i]));
-	if (!str2)
+	}
+	str = ft_stock_line(str, line);
+	if (!str)
 		return (0);
-	i++;
-	while (str[i])
-		str2[j++] = str[i++];
-	str2[j] = '\0';
-	free(str);
-	return (str2);
+	return (1);
+}
+
+char	**ft_get_file(int fd, int lvl)
+{
+	char	*line;
+	char	**tab;
+
+	line = NULL;
+	if (get_next_line(fd, &line) == 1)
+	{
+		tab = ft_get_file(fd, lvl + 1);
+		if (!tab)
+			return (NULL);
+	}
+	else
+	{
+		tab = malloc(sizeof(char *) * (lvl + 2));
+		if (!tab)
+			return (NULL);
+		tab[lvl + 1] = NULL;
+	}
+	tab[lvl] = line;
+	return (tab);
 }

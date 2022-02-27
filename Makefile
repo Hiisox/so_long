@@ -1,6 +1,7 @@
 NAME =		so_long
 
-SRCS =		srcs/so_long.c srcs/parsing_map.c srcs/checker_map.c srcs/get_next_line.c srcs/get_next_line_utils.c
+SRCS =		srcs/get_next_line.c srcs/utils.c srcs/main.c srcs/utils2.c srcs/parsing1.c \
+		srcs/parsing2.c srcs/init_window.c  srcs/init_window2.c srcs/move_player.c
 
 _DEPS =		so_long.h
 
@@ -14,7 +15,7 @@ CC =		clang
 
 RM =		rm -f
 
-CFLAGS =	-Wall -Werror -Wextra
+CFLAGS =	-Wall -Werror -Wextra -g
 
 MLX =		./minilibx
 
