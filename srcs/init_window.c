@@ -6,7 +6,7 @@
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 18:07:51 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/28 13:02:37 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 14:37:13 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,30 @@ int	key_hook(int keycode, t_game *game)
 
 int	exit_game(t_game *game)
 {
-	mlx_clear_window(game->window.mlx, game->window.mlx_win);
-	mlx_destroy_image(game->window.mlx, game->assets.player.img);
-	mlx_destroy_image(game->window.mlx, game->assets.floor.img);
-	mlx_destroy_image(game->window.mlx, game->assets.wall.img);
-	mlx_destroy_image(game->window.mlx, game->assets.collec.img);
-	mlx_destroy_image(game->window.mlx, game->assets.exit.img);
-	mlx_destroy_window(game->window.mlx, game->window.mlx_win);
-//	free(game->window.mlx);
-//	free(game->window.mlx_win);
+	if (game->assets.player.img)
+		mlx_destroy_image(game->window.mlx, game->assets.player.img);
+	if (game->assets.floor.img)
+		mlx_destroy_image(game->window.mlx, game->assets.floor.img);
+	if (game->assets.wall.img)
+		mlx_destroy_image(game->window.mlx, game->assets.wall.img);
+	if (game->assets.collec.img)
+		mlx_destroy_image(game->window.mlx, game->assets.collec.img);
+	if (game->assets.exit.img)
+		mlx_destroy_image(game->window.mlx, game->assets.exit.img);
+	if (game->window.mlx_win)
+		mlx_destroy_window(game->window.mlx, game->window.mlx_win);
 	free_all(game);
 	exit(1);
 	return (0);
+}
+
+void	init_struct(t_game *game)
+{
+	game->assets.player.img = NULL;
+	game->assets.floor.img = NULL;
+	game->assets.exit.img = NULL;
+	game->assets.wall.img = NULL;
+	game->assets.collec.img = NULL;
+	game->window.mlx = NULL;
+	game->window.mlx_win = NULL;
 }

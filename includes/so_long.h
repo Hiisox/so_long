@@ -6,7 +6,7 @@
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:31:12 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/25 19:01:15 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 14:39:03 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ typedef struct s_mlx
 {
 	void	*mlx;
 	void	*mlx_win;
-	int	count;
-	
+	int		count;
 }			t_mlx;
 
 typedef struct s_assets
@@ -65,9 +64,9 @@ typedef struct s_assets
 	t_img	exit;
 	t_img	floor;
 	t_img	collec;
-}
-			t_assets;
-typedef struct	s_game
+}			t_assets;
+
+typedef struct s_game
 {
 	t_assets	assets;
 	t_mlx		window;
@@ -75,16 +74,17 @@ typedef struct	s_game
 	t_img		img;
 }			t_game;
 
-int	check_dim(t_game *game);
-void    print_image2(t_game *game, int i, int j);
-int	exit_game(t_game *game);
+void	init_struct(t_game *game);
+int		check_dim(t_game *game);
+void	print_image2(t_game *game, int i, int j);
+int		exit_game(t_game *game);
 void	go_right(t_game *game);
 void	go_down(t_game *game);
 void	go_up(t_game *game);
 void	go_left(t_game *game);
 void	print_image(t_game *game);
-int	check_wall(t_map *map,int x, int y, char next);
-int	key_hook(int keycode, t_game *game);
+int		check_wall(t_map *map, int x, int y, char next);
+int		key_hook(int keycode, t_game *game);
 void	go_up(t_game *game);
 void	init_images(t_game *game);
 void	init_window(t_game *game);

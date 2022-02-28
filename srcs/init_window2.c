@@ -6,7 +6,7 @@
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 18:13:32 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/28 13:13:03 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 14:36:39 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	init_window(t_game *game)
 	x = game->map.x;
 	y = game->map.y;
 	game->window.count = 0;
+	init_struct(game);
 	game->window.mlx = mlx_init();
 	if (game->window.mlx == NULL)
 		exit_game(game);
@@ -82,7 +83,7 @@ void	print_image(t_game *game)
 
 	i = 0;
 	j = 0;
-	if (game->window.count > 0)	
+	if (game->window.count > 0)
 		printf("move's count = %d\n", game->window.count);
 	while (game->map.map[i])
 	{
@@ -100,26 +101,18 @@ void	print_image(t_game *game)
 void	print_image2(t_game *game, int i, int j)
 {
 	if (game->map.map[i][j] == '0')
-	{
-		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.floor.img, j * 60, i * 60) == 0
+		mlx_put_image_to_window(game->window.mlx, game->window.mlx_win,
+			game->assets.floor.img, j * 60, i * 60);
 	else if (game->map.map[i][j] == '1')
-	{
-		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.wall.img, j * 60, i * 60) == 0)
-			exit_game(game);
-	}
+		mlx_put_image_to_window(game->window.mlx, game->window.mlx_win,
+			game->assets.wall.img, j * 60, i * 60);
 	else if (game->map.map[i][j] == 'C')
-	{
-		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.collec.img, j * 60, i * 60) == 0)
-			exit_game(game);
-	}
+		mlx_put_image_to_window(game->window.mlx, game->window.mlx_win,
+			game->assets.collec.img, j * 60, i * 60);
 	else if (game->map.map[i][j] == 'E')
-	{
-		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.exit.img, j * 60, i * 60) == 0)
-			exit_game(game);
-	}
+		mlx_put_image_to_window(game->window.mlx, game->window.mlx_win,
+			game->assets.exit.img, j * 60, i * 60);
 	else if (game->map.map[i][j] == 'P')
-	{
-		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.player.img, j * 60, i * 60) == 0)
-			exit_game(game);
-	}
+		mlx_put_image_to_window(game->window.mlx, game->window.mlx_win,
+			game->assets.player.img, j * 60, i * 60);
 }

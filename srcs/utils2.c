@@ -6,7 +6,7 @@
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 18:48:28 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/24 16:11:48 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 14:50:57 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	free_all(t_game *game)
 
 int	check_dim(t_game *game)
 {
-	if (game->map.x * 60 > 1920)
+	if (game->map.x * 60 > 2560)
 		return (1);
-	if (game->map.y * 60 > 1080)
+	if (game->map.y * 60 > 1440)
 		return (1);
 	return (0);
 }
