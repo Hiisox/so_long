@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lkhamlac <lkhamlac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:31:12 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/28 14:39:03 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 17:20:02 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-
+# include <stdarg.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -74,6 +74,19 @@ typedef struct s_game
 	t_img		img;
 }			t_game;
 
+int		ft_printf(const char *str, ...);
+int		what_type(va_list ap, const char thetype);
+int		ft_putchar_retlen(char c);
+int		ft_putstr_retlen(char *str);
+int		ft_putnbr(int n);
+int		ft_nbrlen(int n);
+int		ft_putnbr_hexa(unsigned int n, const char chara);
+int		ft_nbrlen_hexa(unsigned int n);
+int		ft_nbrlen_ptr(unsigned long int n);
+int		ft_putnbr_ptr(unsigned long int n);
+int		ft_nbrlen_unsigned(unsigned int n);
+int		ft_putnbr_unsigned(unsigned int n);
+void	ft_converter_ptr(unsigned long int n);
 void	init_struct(t_game *game);
 int		check_dim(t_game *game);
 void	print_image2(t_game *game, int i, int j);
@@ -86,7 +99,7 @@ void	print_image(t_game *game);
 int		check_wall(t_map *map, int x, int y, char next);
 int		key_hook(int keycode, t_game *game);
 void	go_up(t_game *game);
-void	init_images(t_game *game);
+int		init_images(t_game *game);
 void	init_window(t_game *game);
 void	free_all(t_game *game);
 void	parsing(int ac, char **av, t_game *game);

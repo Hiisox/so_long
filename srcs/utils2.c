@@ -6,7 +6,7 @@
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 18:48:28 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/28 14:50:57 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 16:21:11 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	free_all(t_game *game)
 		i++;
 	}
 	free(game->map.map);
+	close(game->map.fd);
 }
 
 int	check_dim(t_game *game)

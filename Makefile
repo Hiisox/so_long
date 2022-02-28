@@ -1,7 +1,9 @@
 NAME =		so_long
 
 SRCS =		srcs/get_next_line.c srcs/utils.c srcs/main.c srcs/utils2.c srcs/parsing1.c \
-		srcs/parsing2.c srcs/init_window.c  srcs/init_window2.c srcs/move_player.c
+		srcs/parsing2.c srcs/init_window.c  srcs/init_window2.c srcs/move_player.c \
+		srcs/ft_printf.c  srcs/ft_printf_fct.c  srcs/ft_printf_hexa.c \
+		srcs/ft_printf_ptr.c  srcs/ft_printf_unsigned.c
 
 _DEPS =		so_long.h
 

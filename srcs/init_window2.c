@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_window2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lkhamlac <lkhamlac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 18:13:32 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/28 14:36:39 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 17:06:07 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,40 @@ void	init_window(t_game *game)
 			x * 60, y * 60, "so_long");
 	if (game->window.mlx_win == NULL)
 		exit_game(game);
-	init_images(game);
+	if (!init_images(game))
+	{
+		write(1, "Error :textures\n", 16);
+		exit_game(game);
+	}
 	print_image(game);
 	mlx_key_hook(game->window.mlx_win, key_hook, game);
 	mlx_hook(game->window.mlx_win, 17, 1L << 17, exit_game, game);
 	mlx_loop(game->window.mlx);
 }
 
-void	init_images(t_game *game)
+int	init_images(t_game *game)
 {
 	game->assets.wall.img = mlx_xpm_file_to_image(game->window.mlx,
 			WALL, &game->assets.wall.width, &game->assets.wall.height);
 	if (game->assets.wall.img == NULL)
-		exit_game(game);
+		return (0);
 	game->assets.player.img = mlx_xpm_file_to_image(game->window.mlx,
 			PLAYER, &game->assets.player.width, &game->assets.player.height);
 	if (game->assets.player.img == NULL)
-		exit_game(game);
+		return (0);
 	game->assets.floor.img = mlx_xpm_file_to_image(game->window.mlx,
 			FLOOR, &game->assets.floor.width, &game->assets.floor.height);
 	if (game->assets.floor.img == NULL)
-		exit_game(game);
+		return (0);
 	game->assets.collec.img = mlx_xpm_file_to_image(game->window.mlx,
 			COLLEC, &game->assets.collec.width, &game->assets.collec.height);
 	if (game->assets.collec.img == NULL)
-		exit_game(game);
+		return (0);
 	game->assets.exit.img = mlx_xpm_file_to_image(game->window.mlx,
 			EXIT, &game->assets.exit.width, &game->assets.exit.height);
 	if (game->assets.exit.img == NULL)
-		exit_game(game);
+		return (0);
+	return (1);
 }
 
 void	print_image(t_game *game)
@@ -84,7 +89,7 @@ void	print_image(t_game *game)
 	i = 0;
 	j = 0;
 	if (game->window.count > 0)
-		printf("move's count = %d\n", game->window.count);
+		ft_printf("move's count = %d\n", game->window.count);
 	while (game->map.map[i])
 	{
 		while (game->map.map[i][j])

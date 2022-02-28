@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lkhamlac <lkhamlac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 18:48:28 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/25 18:18:28 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 16:47:56 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,14 @@ void	parsing(int ac, char **av, t_game *game)
 		exit(1);
 	}
 	game->map.fd = open(av[1], O_RDONLY);
-	if (game->map.fd < 0)
+	if (game->map.fd < 0 || read(game->map.fd, 0, 0) == -1)
 	{
 		write(2, "error file\n", 11);
-		exit(2);
+		exit(1);
 	}
 	i = parsing_arg(game);
 	if (i)
 	{
-		close(game->map.fd);
 		if (i == 1)
 			free_all(game);
 		write(2, "error map\n", 10);
@@ -43,6 +42,8 @@ int	parsing_arg(t_game *game)
 	game->map.map = ft_get_file(game->map.fd, 0);
 	if (!(game->map.map))
 		return (2);
+	if (ft_strlen(game->map.map[0]) < 1)
+		return (1);
 	game->map.parsing = 0;
 	check_e(game);
 	check_p(game);

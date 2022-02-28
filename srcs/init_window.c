@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: lkhamlac <lkhamlac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 18:07:51 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/28 14:37:13 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 16:41:17 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int	exit_game(t_game *game)
 		mlx_destroy_image(game->window.mlx, game->assets.exit.img);
 	if (game->window.mlx_win)
 		mlx_destroy_window(game->window.mlx, game->window.mlx_win);
+	if (game->window.mlx)
+	{
+		mlx_destroy_display(game->window.mlx);
+		free(game->window.mlx);
+	}
 	free_all(game);
 	exit(1);
 	return (0);
