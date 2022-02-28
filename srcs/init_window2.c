@@ -6,7 +6,7 @@
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 18:13:32 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/25 19:06:39 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 13:13:03 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,9 @@ void	init_window(t_game *game)
 		exit_game(game);
 	init_images(game);
 	print_image(game);
-	if (mlx_key_hook(game->window.mlx_win, key_hook, game) == NULL)
-		exit_game(game);
-	if (mlx_hook(game->window.mlx_win, 17, 1L << 17, exit_game, game) == NULL)
-		exit_game(game);
-	if (mlx_loop(game->window.mlx) == NULL)
-		exit_game(game);
+	mlx_key_hook(game->window.mlx_win, key_hook, game);
+	mlx_hook(game->window.mlx_win, 17, 1L << 17, exit_game, game);
+	mlx_loop(game->window.mlx);
 }
 
 void	init_images(t_game *game)
@@ -85,12 +82,8 @@ void	print_image(t_game *game)
 
 	i = 0;
 	j = 0;
-	if (game->window.count > 0)
-	{
-		if (mlx_clear_window(game->window.mlx, game->window.mlx_win) == NULL)
-			exit_game(game);	
+	if (game->window.count > 0)	
 		printf("move's count = %d\n", game->window.count);
-	}
 	while (game->map.map[i])
 	{
 		while (game->map.map[i][j])
@@ -107,23 +100,26 @@ void	print_image(t_game *game)
 void	print_image2(t_game *game, int i, int j)
 {
 	if (game->map.map[i][j] == '0')
-		if (mlx_put_image_to_window(game->window.mlx,
-			game->window.mlx_win, game->assets.floor.img, j * 60, i * 60) == NULL)
-			exit_game(game);
+	{
+		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.floor.img, j * 60, i * 60) == 0
 	else if (game->map.map[i][j] == '1')
-		if (mlx_put_image_to_window(game->window.mlx,
-			game->window.mlx_win, game->assets.wall.img, j * 60, i * 60) == NULL)
+	{
+		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.wall.img, j * 60, i * 60) == 0)
 			exit_game(game);
+	}
 	else if (game->map.map[i][j] == 'C')
-		if (mlx_put_image_to_window(game->window.mlx,
-			game->window.mlx_win, game->assets.collec.img, j * 60, i * 60) == NULL)
+	{
+		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.collec.img, j * 60, i * 60) == 0)
 			exit_game(game);
+	}
 	else if (game->map.map[i][j] == 'E')
-		if (mlx_put_image_to_window(game->window.mlx,
-			game->window.mlx_win, game->assets.exit.img, j * 60, i * 60) == NULL)
+	{
+		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.exit.img, j * 60, i * 60) == 0)
 			exit_game(game);
+	}
 	else if (game->map.map[i][j] == 'P')
-		if (mlx_put_image_to_window(game->window.mlx,
-			game->window.mlx_win, game->assets.player.img, j * 60, i * 60 == NULL))
+	{
+		if (mlx_put_image_to_window(game->window.mlx, game->window.mlx_win, game->assets.player.img, j * 60, i * 60) == 0)
 			exit_game(game);
+	}
 }

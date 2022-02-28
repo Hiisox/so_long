@@ -6,7 +6,7 @@
 /*   By: mmhaya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 18:07:51 by mmhaya            #+#    #+#             */
-/*   Updated: 2022/02/25 19:01:02 by mmhaya           ###   ########.fr       */
+/*   Updated: 2022/02/28 13:02:37 by mmhaya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	key_hook(int keycode, t_game *game)
 		go_right(game);
 	if (keycode == 65307)
 		exit_game(game);
-	return (0);
+	return (1);
 }
 
 int	exit_game(t_game *game)
